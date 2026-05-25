@@ -1,0 +1,41 @@
+controller:
+  admin:
+    username: "admin"
+    existingSecret: "jenkins-admin-secret"
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      cpu: 2000m
+      memory: 2Gi
+
+  ingress:
+    enabled: true
+    ingressClassName: tailscale
+    path: /
+    pathType: Prefix
+    hostName: ""
+    annotations: {}
+    tls:
+      - hosts:
+          - jenkins
+
+  jenkinsUrl: "https://jenkins.tail651fca.ts.net"
+
+persistence:
+  enabled: true
+  existingClaim: jenkins-fss-pvc
+  subPath: jenkins
+
+agent:
+  image:
+    registry: docker.io
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1024Mi"
